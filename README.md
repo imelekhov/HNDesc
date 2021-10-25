@@ -7,8 +7,8 @@ This repository contains the PyTorch implementation of our work [Digging Into Se
 </p>
 
 <p align="center">
-  <img src="doc/aachen1.png" width="50%" />
-  <img src="doc/aachen2.png" width="50%" />
+  <img src="doc/aachen1.png" width="49%" />
+  <img src="doc/aachen2.png" width="49%" />
 </p>
 
 
