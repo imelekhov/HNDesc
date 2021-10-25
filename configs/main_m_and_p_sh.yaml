@@ -1,0 +1,39 @@
+pipeline: Hard Negative Descriptors
+data_params:
+  work_dir: /data/projects/HNDesc
+  img_dir_m: /ssd/data/CAPS-MegaDepth-release-light
+  st_dir_m: /ssd/data/CAPS-MegaDepth-release-light/stylization_full
+  precomputed_dir_m: /data/pre_computed/MegaDepth-light-features
+  global_desc_dict_m_train: ${data_params.img_dir_m}/knn_caps_train_radenovic.pkl
+  global_desc_dict_m_test: ${data_params.img_dir_m}/knn_caps_test_radenovic.pkl
+  kpts_descs_dir_m: ${data_params.precomputed_dir_m}/kpts/superpoint
+  img_dir_p: /ssd/data/phototourism/orig_imgs_only
+  st_dir_p: /ssd/data/phototourism/stylization_fast
+  precomputed_dir_p: /data2/pre_computed/Phototourism-features
+  global_desc_dict_p_train: ${data_params.img_dir_p}/knn_phototourism_train_radenovic.pkl
+  global_desc_dict_p_test: ${data_params.img_dir_p}/knn_phototourism_test_radenovic.pkl
+  kpts_descs_dir_p: ${data_params.precomputed_dir_p}/kpts/superpoint
+  val_dataset_dir: ${data_params.precomputed_dir}/validation_dataset
+  crop_size: 256
+  win_size: 3
+model_params:
+  backbone_net: caps
+  resume_snapshot: /data2/output/hndesc/snapshots/caps_hn_minibatch_MP_st_gd__origval/best_val.pth #${output_params.snapshot_dir}/snapshot030000.pth
+train_params:
+  bs: 16 #7
+  lr: 1e-4 #1e-3
+  n_workers: 8
+  n_train_iters: 300000 #700000 # 246764 number of images; let us cover 20 epochs
+  scheduler:
+    lrate_decay_steps: 50000 #140000
+    lrate_decay_factor: 0.5
+output_params:
+  out_dir: /data2/output/hndesc
+  logger_dir: ${output_params.out_dir}/tboard/${model_params.backbone_net}_hn_minibatch_MP_st_gd__origval
+  snapshot_dir: ${output_params.out_dir}/snapshots/${model_params.backbone_net}_hn_minibatch_MP_st_gd__origval
+  validate_interval: 10000 #20000
+  log_scalar_interval: 4000 #1000
+seed: 1984
+hydra:
+  run:
+    dir: ${output_params.out_dir}
