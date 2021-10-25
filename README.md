@@ -1,6 +1,12 @@
 # Digging Into Self-Supervised Learning of Feature Descriptors
 This repository contains the PyTorch implementation of our work [Digging Into Self-Supervised Learning of Feature Descriptors](https://imelekhov.com/hndesc/) accepted at 3DV 2021.
 
+<p align="center">
+  <a href="https://arxiv.org/abs/2110.04773"><img src="doc/pipeline_small.svg" width="60%"/></a>
+  <br /><em>Local image descriptors learning pipeline</em>
+</p>
+
+
 # BibTeX
 If you find our work useful, please cite *both* papers:
 ```
