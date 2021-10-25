@@ -6,9 +6,16 @@ This repository contains the PyTorch implementation of our work [Digging Into Se
   <br /><em>Local image descriptors learning pipeline</em>
 </p>
 
+### Aachen
 <p align="center">
   <img src="doc/aachen1.png" width="49%" />
   <img src="doc/aachen2.png" width="49%" />
+</p>
+
+### InLOC
+<p align="center">
+  <img src="doc/inloc1.png" width="49%" />
+  <img src="doc/inloc2.png" width="49%" />
 </p>
 
 
