@@ -1,0 +1,11 @@
+data_params:
+  work_dir: /data/projects/epipolar/HNDesc
+  img_dir: /data/datasets/CAPS-MegaDepth-release-light
+  precomputed_dir: /data/pre_computed/MegaDepth-light-features
+  global_descs_dir: ${data_params.precomputed_dir}/global_descs
+  kpts_descs_dir: ${data_params.precomputed_dir}/kpts/superpoint
+  crop_size: 192
+output_params:
+  output_path: ${data_params.precomputed_dir}/validation_dataset
+n_workers: 8
+seed: 1984
