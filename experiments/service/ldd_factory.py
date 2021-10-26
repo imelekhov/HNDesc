@@ -24,26 +24,14 @@ class LocalDetectorDescriptor(object):
         self.descriptor_name = self.cfg.descriptor.descriptor_params.name
         self.desc_backbone = self.cfg.descriptor.descriptor_params.backbone
 
-        self.detector = self._get_detector()
+        self.detector = self._detectors_fabric()
 
         if self.detector_name == self.descriptor_name:
             self.det_and_desc = self.detector
         else:
             self.descriptor = self._descriptors_fabric().to(self.device)
 
-        '''
-        self.detector_cfg = self.cfg.task.task_params.detector
-
-        if self.cfg.descriptor.descriptor_params.name == 'superpoint':
-            #  we have one model as a detector and descriptor
-            self.det_and_desc = self._models_fabric(self.detector_cfg).to(self.device)
-        else:
-            self.descriptor_cfg = self.cfg.descriptor.descriptor_params
-            self.detector = self._models_fabric(self.detector_cfg).to(self.device)
-            self.descriptor = self._models_fabric(self.descriptor_cfg).to(self.device)
-        '''
-
-    def _get_detector(self):
+    def _detectors_fabric(self):
         detector = None
         if self.detector_name == 'sift':
             detector = SIFTModel()
