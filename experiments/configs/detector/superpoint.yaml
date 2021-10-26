@@ -1,0 +1,9 @@
+# @package _group_
+detector_params:
+  name: superpoint_orig
+  img_size: -1 # [640, 480]  # -1 if the full-size images are going to use
+  nms_radius: 3
+  keypoint_threshold: 0.005
+  max_keypoints: -1
+  remove_borders: 4
+  snapshot: ${paths.snapshots_dir}/${detector.detector_params.name}/checkpoint.pt
