@@ -1,0 +1,23 @@
+# @package _group_
+task_params:
+  name: hpatches
+  pck_thresholds: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+  h_mtx_thresholds: [1, 3, 5, 10]
+  detector:
+    name: superpoint_orig
+    resize_max: null
+    nms_radius: 3
+    keypoint_threshold: 0.005
+    max_keypoints: -1
+    max_keypoints_480x640: null
+    remove_borders: 4
+    snapshot: ${paths.snapshots_dir}/${task.task_params.detector.name}/checkpoint.pt
+  paths:
+    img_path: ${paths.datasets_home_dir}/hpatches-sequences-release
+    img_home_dir: ${task.task_params.paths.img_path}
+  output:
+    home_dir: ${paths.output_home_dir}/extracted_kpts_descs/${task.task_params.name}
+    det_desc_home_dir: ${task.task_params.output.home_dir}/${task.task_params.detector.name}-n${task.task_params.detector.max_keypoints}-r${task.task_params.detector.resize_max}__${descriptor.descriptor_params.name}_${descriptor.descriptor_params.backbone}_${descriptor.descriptor_params.exper_settings_name}
+    precomputed_feats_dir: ${task.task_params.output.det_desc_home_dir}/feats
+    res_txt_fname: ${task.task_params.output.det_desc_home_dir}/res.txt
+    res_pkl_fname: /ssd/pre_computed/hpatches-cache-plots/cache/${descriptor.descriptor_params.exper_settings_name}_res.pkl
