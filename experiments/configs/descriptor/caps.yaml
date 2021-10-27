@@ -1,0 +1,15 @@
+# @package _group_
+descriptor_params:
+  name: caps
+  exper_settings_name: caps_all_feats
+  snapshot: ${paths.snapshots_dir}/${descriptor.descriptor_params.name}/caps-pretrained.pth
+  pretrained: true
+  backbone: resnet50
+  coarse_feat_dim: 128
+  fine_feat_dim: 128
+  multi_gpu: false
+  use_mn: false
+  mn_prob_threshold: 15
+  use_nn: true
+  prob_from: correlation
+  window_size: 0.125

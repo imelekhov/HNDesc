@@ -1,0 +1,6 @@
+# @package _group_
+descriptor_params:
+  name: r2d2_orig_waf
+  backbone: r2d2
+  exper_settings_name: r2d2_orig_waf
+  snapshot: ${paths.snapshots_dir}/${descriptor.descriptor_params.name}/checkpoint.pt

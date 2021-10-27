@@ -1,0 +1,6 @@
+# @package _group_
+descriptor_params:
+  name: superpoint
+  backbone: superpoint
+  exper_settings_name: superpoint_orig
+  snapshot: ${paths.snapshots_dir}/${detector.detector_params.name}/checkpoint.pt

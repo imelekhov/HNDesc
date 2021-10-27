@@ -116,12 +116,8 @@ class LocalDetectorDescriptor(object):
                 if self.descriptor_name == 'caps':
                     feat_c, feat_f = self.descriptor.extract_features(descriptor_input.unsqueeze(0),
                                                                       kpts)
-                    local_descriptors = feat_f.squeeze().t()
-                    # local_descriptors = torch.cat((feat_c, feat_f), -1).squeeze().t()
+                    local_descriptors = torch.cat((feat_c, feat_f), -1).squeeze().t()
                     local_descriptors = F.normalize(local_descriptors, dim=0)
-                    # local_descriptors = feat_c.squeeze().t()
-                    # print(f'{feat_c.shape}, {feat_f.shape}, {local_descriptors.shape}')
-                    # sys.exit()
                 else:
                     dense_descriptors = self.descriptor.forward(descriptor_input)
 
@@ -211,12 +207,8 @@ class LocalDetectorDescriptor(object):
                         if self.descriptor_name == 'caps':
                             feat_c, feat_f = self.descriptor.extract_features(descriptor_input.unsqueeze(0),
                                                                               kpts)
-                            local_descriptors = feat_f.squeeze().t()
-                            #local_descriptors = torch.cat((feat_c, feat_f), -1).squeeze().t()
+                            local_descriptors = torch.cat((feat_c, feat_f), -1).squeeze().t()
                             local_descriptors = F.normalize(local_descriptors, dim=0)
-                            #local_descriptors = feat_c.squeeze().t()
-                            #print(f'{feat_c.shape}, {feat_f.shape}, {local_descriptors.shape}')
-                            #sys.exit()
                         else:
                             dense_descriptors = self.descriptor.forward(descriptor_input)
 
