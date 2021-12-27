@@ -47,6 +47,9 @@ class HPSequenceBenchmark(Benchmark):
         self.hpsequences_path = self.cfg.task.task_params.paths.img_path
         self.preds = self.cfg.task.task_params.output.precomputed_feats_dir
 
+        print('Started')
+        sys.exit()
+
         # Scenes with a very large image resolution (need to be removed)
         self.outliers = ['i_contruction', 'i_crownnight', 'i_dc', 'i_pencils', 'i_whitebuilding',
                          'v_artisans', 'v_astronautis', 'v_talent']

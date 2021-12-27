@@ -1,4 +1,3 @@
-# @package _group_
 descriptor_params:
   name: hndesc
   backbone: caps

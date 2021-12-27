@@ -1,4 +1,3 @@
-# @package _group_
 matcher_params:
   name: knn
   feat_distance_threshold: null

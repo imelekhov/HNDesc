@@ -1,4 +1,3 @@
-# @package _group_
 detector_params:
   name: superpoint_orig
   img_size: -1 # [640, 480]  # -1 if the full-size images are going to use

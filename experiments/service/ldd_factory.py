@@ -9,7 +9,6 @@ from assets.archs_zoo.superpoint_orig import SuperPoint
 from assets.archs_zoo.r2d2_orig import R2D2orig
 from assets.archs_zoo.caps_orig import CAPSNet
 from assets.archs_zoo.sift_orig import SIFTModel
-from assets.archs_zoo.d2net_orig import D2Net
 from assets.descriptors.hndesc import HNDesc, CapsDesc
 
 
@@ -38,9 +37,6 @@ class LocalDetectorDescriptor(object):
         elif self.detector_name == 'superpoint_orig':
             detector_cfg = self.cfg.task.task_params.detector
             detector = SuperPoint(detector_cfg).to(self.device)
-        elif self.detector_name == 'd2net':
-            detector_cfg = self.cfg.task.task_params.detector
-            detector = D2Net(detector_cfg).to(self.device)
         return detector
 
     def _descriptors_fabric(self):
