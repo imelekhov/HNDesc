@@ -9,7 +9,7 @@ from assets.detectors.superpoint_detector import SuperPoint
 from assets.archs_zoo.caps_orig import CAPSNet
 from data.dataset import MegaDepthDataset, AachenFlowDataset, AachenSynthHomography, AachenSHGlobalDescDataset, \
     MegaDepthPhototourismDataset
-from hndesc.utils import cycle, set_seed
+from hndesc.utils import cycle, seed_everything
 from data.augmentations import get_img_augmentations
 from hndesc.criterion import APCriterion, APCriterionWithinPair, TripletCriterion, APCriterionInBatchGD, \
     APCriterionAllNegs, APCriterionRndNegs
@@ -21,7 +21,7 @@ class Pipeline(object):
         cfg_model = self.cfg.model_params
 
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-        set_seed(self.cfg.seed)
+        seed_everything(self.cfg.seed)
         self.model = LocalDescriptor(cfg_model)
 
         print(sum(p.numel() for p in self.model.descriptor.parameters() if p.requires_grad))

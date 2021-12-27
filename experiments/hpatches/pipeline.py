@@ -418,7 +418,6 @@ class HPSequenceBenchmark(Benchmark):
             np.sum(matches_v) / n_v)
         )
 
-
         # PCK metrics
         pck_thresholds = self.cfg.task.task_params.pck_thresholds
         pck_res = self.pck_benchmark(pck_thresholds)
