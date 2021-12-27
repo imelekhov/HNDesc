@@ -47,9 +47,6 @@ class HPSequenceBenchmark(Benchmark):
         self.hpsequences_path = self.cfg.task.task_params.paths.img_path
         self.preds = self.cfg.task.task_params.output.precomputed_feats_dir
 
-        print('Started')
-        sys.exit()
-
         # Scenes with a very large image resolution (need to be removed)
         self.outliers = ['i_contruction', 'i_crownnight', 'i_dc', 'i_pencils', 'i_whitebuilding',
                          'v_artisans', 'v_astronautis', 'v_talent']
@@ -356,7 +353,11 @@ class HPSequenceBenchmark(Benchmark):
         pck_res = {"i": {thr: 0 for thr in pck_thresholds},
                    "v": {thr: 0 for thr in pck_thresholds},
                    }
+
         for seq_name in sorted(os.listdir(self.hpsequences_path)):
+            if seq_name in self.outliers:
+                continue
+
             for img_id in range(2, 7):
                 pos_a = self.kpts_matches[seq_name + "1_" + str(img_id)]["pos_a"]
                 pos_b = self.kpts_matches[seq_name + "1_" + str(img_id)]["pos_b"]
@@ -438,7 +439,7 @@ class HPSequenceBenchmark(Benchmark):
         print(22 * '-')
 
         # Homography metrics
-        h_mtx_thresholds = self.cfg.task.experiment_params.h_mtx_thresholds
+        h_mtx_thresholds = self.cfg.task.task_params.h_mtx_thresholds
         for h_thr in h_mtx_thresholds:
             error_h = self.h_mtx_estimation_benchmark(h_thr)
             print("h_threshold: ", h_thr)
@@ -464,7 +465,7 @@ class HPSequenceBenchmark(Benchmark):
               f'{np.asarray(matching_res["i"] + matching_res["v"]).mean()}')
 
         # write results to the file
-        with open(self.cfg.experiment.experiment_params.output.res_txt_fname, "w") as f:
+        with open(self.cfg.experiment.task_params.output.res_txt_fname, "w") as f:
             f.write(f"PCK benchmark:\n")
             for pck_thr in pck_thresholds:
                 f.write(

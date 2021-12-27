@@ -1,0 +1,15 @@
+project_name: HNDesc
+n_processes: 8
+defaults:
+  - _self_
+  - task: hpatches
+  - descriptor: hndesc
+  - matcher: knn
+paths:
+  datasets_home_dir: /ssd/data
+  project_dir: /data2/projects/HNDesc_github/${project_name}
+  snapshots_dir: ${paths.project_dir}/assets/snapshots
+  output_home_dir: ${paths.project_dir}/output
+hydra:
+  run:
+    dir: ${paths.output_home_dir}
