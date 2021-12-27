@@ -465,7 +465,7 @@ class HPSequenceBenchmark(Benchmark):
               f'{np.asarray(matching_res["i"] + matching_res["v"]).mean()}')
 
         # write results to the file
-        with open(self.cfg.experiment.task_params.output.res_txt_fname, "w") as f:
+        with open(self.cfg.task.task_params.output.res_txt_fname, "w") as f:
             f.write(f"PCK benchmark:\n")
             for pck_thr in pck_thresholds:
                 f.write(
