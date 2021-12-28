@@ -7,9 +7,6 @@ defaults:
   - matcher: knn
 paths:
   datasets_home_dir: /ssd/data
-  project_dir: ./workdir
+  project_dir: .
   snapshots_dir: ${paths.project_dir}/assets/snapshots
   output_home_dir: ${paths.project_dir}/output
-hydra:
-  run:
-    dir: ${paths.output_home_dir}
