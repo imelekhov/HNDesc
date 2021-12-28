@@ -545,6 +545,8 @@ class HPSequenceBenchmark(Benchmark):
         folder_name = self.cfg.task.task_params.paths.img_path
 
         for root, dirs, files in os.walk(folder_name):
+            if root.split("/")[-1] in self.outliers:
+                continue
             if files:
                 fnames_per_scene = [
                     osp.join(root, fname)
