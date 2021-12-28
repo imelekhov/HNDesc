@@ -7,7 +7,7 @@ defaults:
   - matcher: knn
 paths:
   datasets_home_dir: /ssd/data
-  project_dir: /data2/projects/HNDesc_github/${project_name}
+  project_dir: ./workdir
   snapshots_dir: ${paths.project_dir}/assets/snapshots
   output_home_dir: ${paths.project_dir}/output
 hydra:
