@@ -1,0 +1,20 @@
+task_params:
+  name: image_retrieval
+  dataset: rparis6k # ['roxford5k', 'rparis6k']
+  topk: 100
+  detector:
+    name: superpoint_orig
+    resize_max: 1024
+    nms_radius: 3
+    keypoint_threshold: 0.005
+    max_keypoints: 4096
+    remove_borders: 4
+    snapshot: ${paths.snapshots_dir}/${task.task_params.detector.name}/checkpoint.pt
+  paths:
+    img_home_dir: ${paths.datasets_home_dir}/${task.task_params.dataset}
+    radenovic_dict: ${paths.datasets_home_dir}/radenovic_revisited/${task.task_params.dataset}-rSfM120k-resnet101-gem-m.pkl
+  output:
+    home_dir: ${paths.output_home_dir}/extracted_kpts_descs/${task.task_params.name}/${task.task_params.dataset}
+    det_desc_home_dir: ${task.task_params.output.home_dir}/${task.task_params.detector.name}-n${task.task_params.detector.max_keypoints}-r${task.task_params.detector.resize_max}__${descriptor.descriptor_params.name}_${descriptor.descriptor_params.backbone}_${descriptor.descriptor_params.exper_settings_name}
+    precomputed_feats_dir: ${task.task_params.output.det_desc_home_dir}/feats
+    res_fname: ${task.task_params.output.det_desc_home_dir}/res.txt

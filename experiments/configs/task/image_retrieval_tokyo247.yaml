@@ -1,0 +1,22 @@
+task_params:
+  name: image_retrieval
+  dataset: tokyo247
+  detector:
+    name: superpoint_orig
+    resize_max: 1024
+    nms_radius: 3
+    keypoint_threshold: 0.005
+    max_keypoints: 4096
+    remove_borders: 4
+    snapshot: ${paths.snapshots_dir}/${task.task_params.detector.name}/checkpoint.pt
+    output_name: ${task.task_params.detector.name}-n${task.task_params.detector.max_keypoints}-r${task.task_params.detector.resize_max}
+  paths:
+    img_home_dir: ${paths.datasets_home_dir}/${task.task_params.dataset}
+    db_imgs_dir: ${task.task_params.paths.img_home_dir}/247_db
+    q_imgs_dir: ${task.task_params.paths.img_home_dir}/247query
+    shortlist_dict_fname: ${task.task_params.paths.img_home_dir}/netvlad_tokyo247_pitts_v3.mat
+  output:
+    home_dir: ${paths.output_home_dir}/extracted_kpts_descs/${task.task_params.name}/${task.task_params.dataset}
+    det_desc_home_dir: ${task.task_params.output.home_dir}/${task.task_params.detector.name}-n${task.task_params.detector.max_keypoints}-r${task.task_params.detector.resize_max}__${descriptor.descriptor_params.name}_${descriptor.descriptor_params.backbone}_${descriptor.descriptor_params.exper_settings_name}
+    precomputed_feats_dir: ${task.task_params.output.det_desc_home_dir}/feats
+    res_fname: ${task.task_params.output.det_desc_home_dir}/reranked_knn.pkl
