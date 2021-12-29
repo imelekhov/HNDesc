@@ -11,7 +11,9 @@ class APCriterion(nn.Module, ABC):
         super().__init__()
         self.knn = knn
         self.ap_criterion_r2d2 = APLoss(nq, min_val, max_val, euc)
-        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        self.device = torch.device(
+            "cuda" if torch.cuda.is_available() else "cpu"
+        )
 
     def forward(self, anc_feat, pos_feat, kpts_crop_ids):
         anc_feat_f, pos_feat_f = [], []
@@ -21,8 +23,8 @@ class APCriterion(nn.Module, ABC):
         for kpts_per_crop in kpts_crop_ids:
             # if there is only one keypoint - skip this image
             if kpts_per_crop > 1:
-                anc_feat_f.append(anc_feat[n:n + kpts_per_crop, :])
-                pos_feat_f.append(pos_feat[n:n + kpts_per_crop, :])
+                anc_feat_f.append(anc_feat[n : n + kpts_per_crop, :])
+                pos_feat_f.append(pos_feat[n : n + kpts_per_crop, :])
                 kpts_crop_ids_only_negs.append(kpts_per_crop - 1)
             n += kpts_per_crop
 
@@ -50,13 +52,21 @@ class APCriterion(nn.Module, ABC):
             # First, let us keep the similarity values ONLY for keypoints which belong to the remaining images
             # in a mini-batch
             if c == 0 and c + kpts_neg_per_crop < sim_neg_all.shape[1]:
-                sim_neg_excl = sim_neg_all[:, c + kpts_neg_per_crop:]
+                sim_neg_excl = sim_neg_all[:, c + kpts_neg_per_crop :]
             elif c != 0 and c + kpts_neg_per_crop == sim_neg_all.shape[1]:
                 sim_neg_excl = sim_neg_all[:, :c]
             else:
-                sim_neg_excl = torch.cat((sim_neg_all[:, :c], sim_neg_all[:, c + kpts_neg_per_crop:]), dim=1)
+                sim_neg_excl = torch.cat(
+                    (
+                        sim_neg_all[:, :c],
+                        sim_neg_all[:, c + kpts_neg_per_crop :],
+                    ),
+                    dim=1,
+                )
 
-            neg_top_sim, _ = torch.sort(sim_neg_excl[r:r + kpts_per_crop, :], dim=1, descending=True)
+            neg_top_sim, _ = torch.sort(
+                sim_neg_excl[r : r + kpts_per_crop, :], dim=1, descending=True
+            )
 
             r += kpts_per_crop
             c += kpts_per_crop
@@ -65,11 +75,15 @@ class APCriterion(nn.Module, ABC):
                 # if the number of hard-negatives is less than self.knn, let's repeat the last column
                 # (self.knn - number_of_negatives_in_a_minibatch)-times
                 n_times = self.knn - neg_top_sim.shape[1]
-                neg_pad = torch.cat(n_times * [neg_top_sim[:, -1]]).view(n_times, -1).t()
+                neg_pad = (
+                    torch.cat(n_times * [neg_top_sim[:, -1]])
+                    .view(n_times, -1)
+                    .t()
+                )
                 neg_top_sim = torch.cat((neg_top_sim, neg_pad), dim=1)
                 sim_neg.append(neg_top_sim)
             else:
-                sim_neg.append(neg_top_sim[:, :self.knn])
+                sim_neg.append(neg_top_sim[:, : self.knn])
 
             n_crops += 1
 
@@ -90,7 +104,9 @@ class APCriterionAllNegs(nn.Module, ABC):
     def __init__(self, nq=20, min_val=0, max_val=1, euc=False):
         super().__init__()
         self.ap_criterion_r2d2 = APLoss(nq, min_val, max_val, euc)
-        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        self.device = torch.device(
+            "cuda" if torch.cuda.is_available() else "cpu"
+        )
 
     def forward(self, anc_feat, pos_feat, kpts_crop_ids):
         anc_feat_f, pos_feat_f = [], []
@@ -100,8 +116,8 @@ class APCriterionAllNegs(nn.Module, ABC):
         for kpts_per_crop in kpts_crop_ids:
             # if there is only one keypoint - skip this image
             if kpts_per_crop > 1:
-                anc_feat_f.append(anc_feat[n:n + kpts_per_crop, :])
-                pos_feat_f.append(pos_feat[n:n + kpts_per_crop, :])
+                anc_feat_f.append(anc_feat[n : n + kpts_per_crop, :])
+                pos_feat_f.append(pos_feat[n : n + kpts_per_crop, :])
                 kpts_crop_ids_only_negs.append(kpts_per_crop - 1)
             n += kpts_per_crop
 
@@ -135,7 +151,9 @@ class APCriterionRndNegs(nn.Module, ABC):
         super().__init__()
         self.knn = knn
         self.ap_criterion_r2d2 = APLoss(nq, min_val, max_val, euc)
-        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        self.device = torch.device(
+            "cuda" if torch.cuda.is_available() else "cpu"
+        )
 
     def forward(self, anc_feat, pos_feat, kpts_crop_ids):
         anc_feat_f, pos_feat_f = [], []
@@ -145,8 +163,8 @@ class APCriterionRndNegs(nn.Module, ABC):
         for kpts_per_crop in kpts_crop_ids:
             # if there is only one keypoint - skip this image
             if kpts_per_crop > 1:
-                anc_feat_f.append(anc_feat[n:n + kpts_per_crop, :])
-                pos_feat_f.append(pos_feat[n:n + kpts_per_crop, :])
+                anc_feat_f.append(anc_feat[n : n + kpts_per_crop, :])
+                pos_feat_f.append(pos_feat[n : n + kpts_per_crop, :])
                 kpts_crop_ids_only_negs.append(kpts_per_crop - 1)
             n += kpts_per_crop
 
@@ -174,15 +192,21 @@ class APCriterionRndNegs(nn.Module, ABC):
             # First, let us keep the similarity values ONLY for keypoints which belong to the remaining images
             # in a mini-batch
             if c == 0 and c + kpts_neg_per_crop < sim_neg_all.shape[1]:
-                sim_neg_excl = sim_neg_all[:, c + kpts_neg_per_crop:]
+                sim_neg_excl = sim_neg_all[:, c + kpts_neg_per_crop :]
             elif c != 0 and c + kpts_neg_per_crop == sim_neg_all.shape[1]:
                 sim_neg_excl = sim_neg_all[:, :c]
             else:
-                sim_neg_excl = torch.cat((sim_neg_all[:, :c], sim_neg_all[:, c + kpts_neg_per_crop:]), dim=1)
+                sim_neg_excl = torch.cat(
+                    (
+                        sim_neg_all[:, :c],
+                        sim_neg_all[:, c + kpts_neg_per_crop :],
+                    ),
+                    dim=1,
+                )
 
             neg_idxs = list(range(sim_neg_excl.shape[1]))
             random.shuffle(neg_idxs)
-            neg_idxs = neg_idxs[:self.knn]
+            neg_idxs = neg_idxs[: self.knn]
             sim_neg.append(sim_neg_excl[:, neg_idxs])
 
             r += kpts_per_crop
@@ -215,8 +239,8 @@ class APCriterionWithinPair(APCriterion, ABC):
         for kpts_per_crop in kpts_crop_ids:
             # if there is only one keypoint - skip this image
             if kpts_per_crop > 1:
-                anc_feat_f.append(anc_feat[n:n+kpts_per_crop, :])
-                pos_feat_f.append(pos_feat[n:n+kpts_per_crop, :])
+                anc_feat_f.append(anc_feat[n : n + kpts_per_crop, :])
+                pos_feat_f.append(pos_feat[n : n + kpts_per_crop, :])
                 kpts_crop_ids_only_negs.append(kpts_per_crop - 1)
             n += kpts_per_crop
 
@@ -238,9 +262,11 @@ class APCriterionWithinPair(APCriterion, ABC):
         n_crops = 0
         for kpts_neg_per_crop in kpts_crop_ids_only_negs:
             kpts_per_crop = kpts_neg_per_crop + 1
-            neg_top_sim, _ = torch.sort(sim_neg_all[r:r + kpts_per_crop, c:c + kpts_neg_per_crop],
-                                        dim=1,
-                                        descending=True)
+            neg_top_sim, _ = torch.sort(
+                sim_neg_all[r : r + kpts_per_crop, c : c + kpts_neg_per_crop],
+                dim=1,
+                descending=True,
+            )
             r += kpts_per_crop
             c += kpts_per_crop
 
@@ -251,11 +277,15 @@ class APCriterionWithinPair(APCriterion, ABC):
                 # if the number of hard-negatives is less than self.knn, let's repeat the last column
                 # (self.knn - kpts_neg_per_crop)-times
                 n_times = self.knn - kpts_neg_per_crop
-                neg_pad = torch.cat(n_times * [neg_top_sim[:, -1]]).view(n_times, -1).t()
+                neg_pad = (
+                    torch.cat(n_times * [neg_top_sim[:, -1]])
+                    .view(n_times, -1)
+                    .t()
+                )
                 neg_top_sim = torch.cat((neg_top_sim, neg_pad), dim=1)
                 sim_neg.append(neg_top_sim)
             else:
-                sim_neg.append(neg_top_sim[:, :self.knn])
+                sim_neg.append(neg_top_sim[:, : self.knn])
 
             n_crops += 1
 
@@ -277,7 +307,9 @@ class APCriterionInBatchGD(nn.Module, ABC):
         super().__init__()
         self.knn = knn
         self.ap_criterion_r2d2 = APLoss(nq, min_val, max_val, euc)
-        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        self.device = torch.device(
+            "cuda" if torch.cuda.is_available() else "cpu"
+        )
 
     def forward(self, anc_feat, pos_feat, hn_feat, kpts_crop_ids):
         b, _ = anc_feat.shape
@@ -299,14 +331,25 @@ class APCriterionInBatchGD(nn.Module, ABC):
             # First, let us keep the similarity values ONLY for keypoints which belong to the remaining images
             # in a mini-batch
             if c == 0 and c + n_kpts_per_crop < sim_mtx.shape[1]:
-                sim_remain = sim_mtx[r:r+n_kpts_per_crop, c+n_kpts_per_crop:]
+                sim_remain = sim_mtx[
+                    r : r + n_kpts_per_crop, c + n_kpts_per_crop :
+                ]
             elif c != 0 and c + n_kpts_per_crop == sim_mtx.shape[1]:
-                sim_remain = sim_mtx[r:r+n_kpts_per_crop, :c]
+                sim_remain = sim_mtx[r : r + n_kpts_per_crop, :c]
             else:
-                sim_remain = torch.cat((sim_mtx[r:r+n_kpts_per_crop, :c],
-                                        sim_mtx[r:r+n_kpts_per_crop, c+n_kpts_per_crop:]), dim=1)
+                sim_remain = torch.cat(
+                    (
+                        sim_mtx[r : r + n_kpts_per_crop, :c],
+                        sim_mtx[
+                            r : r + n_kpts_per_crop, c + n_kpts_per_crop :
+                        ],
+                    ),
+                    dim=1,
+                )
 
-            neg_top_sim, _ = torch.topk(sim_remain, k=self.knn, dim=1, largest=True)
+            neg_top_sim, _ = torch.topk(
+                sim_remain, k=self.knn, dim=1, largest=True
+            )
             sim_neg.append(neg_top_sim)
 
             r += n_kpts_per_crop
@@ -327,14 +370,16 @@ class APCriterionInBatchGD(nn.Module, ABC):
 
 
 class TripletCriterion(nn.Module, ABC):
-    def __init__(self, margin=1, swap=False, hn_type='minibatch'):
+    def __init__(self, margin=1, swap=False, hn_type="minibatch"):
         super().__init__()
-        assert hn_type in ['minibatch', 'pair']
+        assert hn_type in ["minibatch", "pair"]
         self.margin = margin
         self.swap = swap
         self.knn = 1
         self.hn_type = hn_type
-        self.criterion = nn.TripletMarginLoss(margin=self.margin, swap=self.swap)
+        self.criterion = nn.TripletMarginLoss(
+            margin=self.margin, swap=self.swap
+        )
 
     def forward(self, anc_feat, pos_feat, kpts_crop_ids):
 
@@ -348,9 +393,11 @@ class TripletCriterion(nn.Module, ABC):
         # since the diagonal elements are for positives, let us put a large number there
         dist_mtx.fill_diagonal_(pos_dist)
 
-        if self.hn_type == 'batch':
+        if self.hn_type == "batch":
             # let us find the hard negative for each row (keypoint) by finding an ID with the smallest distance
-            _, hn_indices = torch.topk(dist_mtx, k=self.knn, dim=1, largest=False)
+            _, hn_indices = torch.topk(
+                dist_mtx, k=self.knn, dim=1, largest=False
+            )
 
             # get the feature vectors for hard negatives
             neg_feat = pos_feat[hn_indices.squeeze()]
@@ -358,15 +405,23 @@ class TripletCriterion(nn.Module, ABC):
             neg_feat = []
             r, c = 0, 0
             for n_kpts_per_crop in kpts_crop_ids:
-                dist_mtx_per_crop = dist_mtx[r:r + n_kpts_per_crop, c:c + n_kpts_per_crop]
-                _, hn_indices_per_crop = torch.topk(dist_mtx_per_crop, k=self.knn, dim=1, largest=False)
-                pos_feat_per_crop = pos_feat[r:r + n_kpts_per_crop, :]
-                neg_feat_per_crop = pos_feat_per_crop[hn_indices_per_crop.squeeze()]
+                dist_mtx_per_crop = dist_mtx[
+                    r : r + n_kpts_per_crop, c : c + n_kpts_per_crop
+                ]
+                _, hn_indices_per_crop = torch.topk(
+                    dist_mtx_per_crop, k=self.knn, dim=1, largest=False
+                )
+                pos_feat_per_crop = pos_feat[r : r + n_kpts_per_crop, :]
+                neg_feat_per_crop = pos_feat_per_crop[
+                    hn_indices_per_crop.squeeze()
+                ]
                 neg_feat.append(neg_feat_per_crop)
                 r += n_kpts_per_crop
                 c += n_kpts_per_crop
             neg_feat = torch.cat(neg_feat)
 
         # compute TripletLoss
-        out = self.criterion(anchor=anc_feat, positive=pos_feat, negative=neg_feat)
+        out = self.criterion(
+            anchor=anc_feat, positive=pos_feat, negative=neg_feat
+        )
         return out
