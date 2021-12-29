@@ -4,20 +4,19 @@ from assets.detectors.orb_detector import ORBdetector
 from assets.detectors.superpoint_detector import Superpointdetector
 
 
-class LocalDetector(object):
+class LocalDetector:
     def __init__(self, cfg):
         self.cfg = cfg
-        # self.detector_cfg = configs.detector_params
         self.detector = self._detector_factory()
 
     def _detector_factory(self):
         detector = None
-        if self.cfg['name'] == 'orb':
+        if self.cfg["name"] == "orb":
             detector = ORBdetector(self.cfg)
-        elif self.cfg['name'] == 'superpoint':
+        elif self.cfg["name"] == "superpoint":
             detector = Superpointdetector(self.cfg)
         else:
-            raise ValueError('detector name is not right')
+            raise ValueError("detector name is not right")
         return detector
 
     def detect_img(self, img: str) -> torch.Tensor:

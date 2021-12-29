@@ -2,10 +2,7 @@ import hydra
 from pathlib import Path
 from experiments.hpatches.pipeline import HPSequenceBenchmark
 from experiments.image_retrieval.pipeline import ImageRetrievalBenchmark
-
-"""
 from experiments.localization.pipeline import VisualLocBenchmark
-"""
 
 
 @hydra.main(config_path="configs", config_name="main")
@@ -21,10 +18,8 @@ def main(cfg):
         benchmark = HPSequenceBenchmark(cfg)
     elif cfg.task.task_params.name == "image_retrieval":
         benchmark = ImageRetrievalBenchmark(cfg)
-    """
-    elif cfg.task.task_params.name == 'localization':
+    elif cfg.task.task_params.name == "localization":
         benchmark = VisualLocBenchmark(cfg)
-    """
 
     benchmark.evaluate()
 
