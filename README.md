@@ -1,7 +1,9 @@
 # Digging Into Self-Supervised Learning of Feature Descriptors
-This repository contains the PyTorch implementation of our work Digging Into Self-Supervised Learning of Feature Descriptors presented at 3DV 2021 
+This repository contains the PyTorch implementation of our work **Digging Into Self-Supervised Learning of Feature Descriptors** presented at 3DV 2021 
 [[Project page]](https://imelekhov.com/hndesc/)
 [[ArXiv]](https://arxiv.org/abs/2110.04773)
+
+TL;DR: The paper proposes an Unsupervised CNN-based local descriptor that is robust to illumination changes and competitve with its fully-(weakly-)supervised counterparts.
 
 <p align="center">
   <a href="https://arxiv.org/abs/2110.04773"><img src="doc/pipeline_small_test.png" width="75%"/></a>
