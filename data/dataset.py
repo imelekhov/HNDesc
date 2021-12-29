@@ -1,4 +1,6 @@
 import itertools
+import sys
+
 import kornia as K
 from kornia.geometry.transform import imgwarp
 import numpy as np
@@ -427,6 +429,9 @@ class MegaDepthDataset(Dataset):
         if self.transforms:
             crop1 = self.transforms(image=crop1)["image"]
             crop2 = self.transforms(image=crop2)["image"]
+
+        if isinstance(crop_hn, list):
+            crop_hn = torch.FloatTensor(crop_hn)
 
         return {
             "img_fname": self.fnames[item],

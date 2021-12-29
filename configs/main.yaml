@@ -21,7 +21,7 @@ train_params:
     lrate_decay_factor: 0.5
 output_params:
   project_dir: .
-  out_dir: ${output_params.project_dir}/output/train/hndesc
+  out_dir: ${output_params.project_dir}/output_hndesc/train/hndesc
   logger_dir: ${output_params.out_dir}/tboard/${model_params.backbone_net}_hn_minibatch_M_st__origval
   snapshot_dir: ${output_params.out_dir}/snapshots/${model_params.backbone_net}_hn_minibatch_M_st__origval
   validate_interval: 6000

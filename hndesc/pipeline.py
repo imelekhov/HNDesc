@@ -24,13 +24,12 @@ class Pipeline:
         seed_everything(self.cfg.seed)
         self.model = LocalDescriptor(cfg_model)
 
-        print(
-            sum(
-                p.numel()
-                for p in self.model.descriptor.parameters()
-                if p.requires_grad
-            )
+        n_params = sum(
+            p.numel()
+            for p in self.model.descriptor.parameters()
+            if p.requires_grad
         )
+        print(f"Number of network parameters: {n_params}")
 
         # initialize dataloaders
         self.train_loader, self.val_loader = self._init_dataloaders()
@@ -110,21 +109,24 @@ class Pipeline:
         descs_pos_crop = self.model.forward(
             data_sample["crop_trg"].to(self.device)
         )
+        """
         descs_hn_crop = self.model.forward(
             data_sample["crop_hn"].to(self.device)
-        )
-
-        mask_valid_kpts = (
-            data_sample["mask_valid_kpts"].squeeze(-1).to(self.device)
         )
         mask_valid_kpts_hn = (
             data_sample["mask_valid_kpts_hn"].squeeze(-1).to(self.device)
         )
+        kpts_hn = data_sample["crop_kpts_hn"]
+        """
+
+        mask_valid_kpts = (
+            data_sample["mask_valid_kpts"].squeeze(-1).to(self.device)
+        )
+
         kpts_crop_ids = torch.sum(mask_valid_kpts, dim=1)
 
         kpts_src = data_sample["crop_src_kpts"]
         kpts_trg = data_sample["crop_trg_kpts"]
-        kpts_hn = data_sample["crop_kpts_hn"]
 
         if self.cfg.model_params.backbone_net == "caps":
             loc_desc_anc = CAPSNet.extract_local_descs(
@@ -207,7 +209,7 @@ class Pipeline:
         self.optimizer.zero_grad()
 
         # compute loss
-        loss, ap = self.criterion(loc_desc_anc, loc_desc_pos)
+        loss, ap = self.criterion(loc_desc_anc, loc_desc_pos, kpts_crop_ids)
         loss.backward()
 
         # update the optimizer
@@ -248,7 +250,7 @@ class Pipeline:
         )
 
     def run(self):
-        print("Start training", self.start_step)
+        print(f"Start training. Step: {self.start_step}")
         train_start_time = time.time()
         train_log_iter_time = time.time()
         for step in range(
@@ -265,7 +267,7 @@ class Pipeline:
                     "Train_total_loss_batch", train_loss_batch, step
                 )
                 print(
-                    f"Elapsed time [min] for {self.cfg.output_params.log_scalar_interval} iterations: "
+                    f"Elapsed time [min] for {self.cfg.output_params.log_scalar_interval} training iterations: "
                     f"{(time.time() - train_log_iter_time) / 60.}"
                 )
                 train_log_iter_time = time.time()
@@ -279,6 +281,7 @@ class Pipeline:
                 step % self.cfg.output_params.validate_interval == 0
                 and step > 0
             ):
+                print(f"Perform validation. Step: {step}")
                 val_time = time.time()
                 best_val = False
                 val_loss, ap_val = self._validate()
