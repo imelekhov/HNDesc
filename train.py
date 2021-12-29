@@ -2,7 +2,7 @@ import hydra
 from hndesc.pipeline import Pipeline
 
 
-@hydra.main(config_path="configs", config_name="main_m_and_p_sh")
+@hydra.main(config_path="configs", config_name="main")
 def main(cfg):
     pipeline = Pipeline(cfg)
     pipeline.run()

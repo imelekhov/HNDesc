@@ -35,6 +35,7 @@ class Pipeline:
         # initialize dataloaders
         self.train_loader, self.val_loader = self._init_dataloaders()
         self.train_loader_iterator = iter(cycle(self.train_loader))
+
         # create an optimizer
         self.optimizer = torch.optim.Adam(
             self.model.get_model().parameters(), lr=self.cfg.train_params.lr

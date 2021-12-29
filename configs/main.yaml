@@ -1,32 +1,29 @@
-pipeline: Hard Negative Descriptors
+pipeline: HNDesc
 data_params:
-  work_dir: /data/projects/HNDesc
-  img_dir: /ssd/data/CAPS-MegaDepth-release-light
-  st_dir: /ssd/data/CAPS-MegaDepth-release-light/stylization_full
-  precomputed_dir: /ssd/pre_computed/MegaDepth-light-features
-  global_desc_dict_train: ${data_params.img_dir}/knn_caps_train_radenovic.pkl
-  global_desc_dict_test: ${data_params.img_dir}/knn_caps_test_radenovic.pkl
-  kpts_descs_dir: ${data_params.precomputed_dir}/kpts/superpoint
+  dataset_dir: /ssd/data/hndesc_train_data
+  img_dir: ${data_params.dataset_dir}/MegaDepth
+  st_dir: ${data_params.dataset_dir}/MegaDepth-stylized
+  kpts_descs_dir: ${data_params.dataset_dir}/MegaDepth-light-features/kpts/superpoint
+  global_desc_dict_train: null
+  global_desc_dict_test: null
   crop_size: 256
   win_size: 3
 model_params:
   backbone_net: caps
-  resume_snapshot: null #${output_params.snapshot_dir}/snapshot030000.pth
+  resume_snapshot: null
 train_params:
-  bs: 16 #7
-  lr: 1e-4 #1e-3
+  bs: 16
+  lr: 1e-4
   n_workers: 8
   n_train_iters: 220000
   scheduler:
-    lrate_decay_steps: 50000 #20000
+    lrate_decay_steps: 50000
     lrate_decay_factor: 0.5
 output_params:
-  out_dir: /data2/output/hndesc
+  project_dir: .
+  out_dir: ${output_params.project_dir}/output/train/hndesc
   logger_dir: ${output_params.out_dir}/tboard/${model_params.backbone_net}_hn_minibatch_M_st__origval
   snapshot_dir: ${output_params.out_dir}/snapshots/${model_params.backbone_net}_hn_minibatch_M_st__origval
-  validate_interval: 6000 #5000
+  validate_interval: 6000
   log_scalar_interval: 200
 seed: 1984
-hydra:
-  run:
-    dir: ${output_params.out_dir}
