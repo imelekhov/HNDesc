@@ -10,6 +10,24 @@ TL;DR: The paper proposes an Unsupervised CNN-based local descriptor that is rob
   <br /><em>Local image descriptors learning pipeline</em>
 </p>
 
+## Requirements
+```
+conda create -n hndesc_env python=3.9
+conda activate hndesc_env
+pip install -r requirements.txt
+```
+
+## Evaluation
+We provide code for evaluation HNDesc on the following benchmarks/tasks:
+
+### HPatches
+
+### Image retrieval
+
+### Camera relocalization
+
+
+
 ## Qualitative results
 
 ### Aachen
