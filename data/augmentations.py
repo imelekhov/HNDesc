@@ -1,7 +1,5 @@
-from PIL import Image
 import albumentations as A
 from albumentations.pytorch import ToTensorV2
-from torchvision.transforms import transforms
 
 
 def get_imagenet_mean_std():
@@ -11,8 +9,7 @@ def get_imagenet_mean_std():
 
 def test_img_augmentations():
     mean, std = get_imagenet_mean_std()
-    augs = A.Compose([A.Normalize(mean, std),
-                      ToTensorV2()], p=1)
+    augs = A.Compose([A.Normalize(mean, std), ToTensorV2()], p=1)
     return augs
 
 
@@ -27,8 +24,15 @@ def train_img_augmentations():
         [
             A.OneOf(
                 [
-                    A.RandomBrightnessContrast(brightness_limit=0.3, contrast_limit=0.2, p=0.7),
-                    A.HueSaturationValue(hue_shift_limit=10, sat_shift_limit=30, val_shift_limit=0, p=0.7),
+                    A.RandomBrightnessContrast(
+                        brightness_limit=0.3, contrast_limit=0.2, p=0.7
+                    ),
+                    A.HueSaturationValue(
+                        hue_shift_limit=10,
+                        sat_shift_limit=30,
+                        val_shift_limit=0,
+                        p=0.7,
+                    ),
                     A.CLAHE(p=0.5),
                     A.ToGray(p=0.5),
                     A.ChannelShuffle(p=0.1),
@@ -36,14 +40,12 @@ def train_img_augmentations():
                 p=0.6,
             ),
             A.OneOf(
-                [
-                    A.GaussianBlur(p=0.5),
-                    A.Blur(p=0.5)  # ,
-                    # A.MotionBlur(p=0.2)
-                ],
+                [A.GaussianBlur(p=0.5), A.Blur(p=0.5)],
                 p=0.3,
             ),
-            A.OneOf([A.GaussNoise(p=0.5), A.IAAAdditiveGaussianNoise(p=0.5)], p=0.1),
+            A.OneOf(
+                [A.GaussNoise(p=0.5), A.IAAAdditiveGaussianNoise(p=0.5)], p=0.1
+            ),
             A.Normalize(mean, std),
             ToTensorV2(),
         ],
