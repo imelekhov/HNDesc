@@ -18,6 +18,9 @@ pip install -r requirements.txt
 ```
 
 ## Evaluation
+The pretrained models are available [here](https://drive.google.com/file/d/1bHJzHK6lMW424d72MpB3M6Se_tXAbSq4/view?usp=sharing).
+The data (~24 Gb) is available [here](https://drive.google.com/file/d/18Wv0XIIMEsYeUNvbLX4GExncRyilj_WG/view?usp=sharing).
+
 We provide code for evaluation HNDesc on the following benchmarks/tasks:
 
 ### HPatches
