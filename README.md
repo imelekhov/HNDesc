@@ -10,8 +10,7 @@ TL;DR: The paper proposes an Unsupervised CNN-based local descriptor that is rob
   <br /><em>Local image descriptors learning pipeline</em>
 </p>
 
-## Abstract
-Fully-supervised CNN-based approaches for learning local image descriptors have shown remarkable results in a wide range of geometric tasks. However, most of them require per-pixel ground-truth keypoint correspondence data which is difficult to acquire at scale. In this work, we focus on understanding the limitations of existing self-supervised approaches and propose a set of improvements that combined lead to powerful feature descriptors. We show that increasing the search space from in-pair to in-batch for hard negative mining brings consistent improvement. To enhance the discriminativeness of feature descriptors, we propose a coarse-to-fine method for mining local hard negatives from a wider search space by using global visual image descriptors. We demonstrate that a combination of synthetic homography transformation, color augmentation, and photorealistic image stylization produces useful representations that are viewpoint and illumination invariant. The feature descriptors learned by the proposed approach perform competitively and surpass their fully- and weakly-supervised counterparts on various geometric benchmarks such as image-based localization, sparse feature matching, and image retrieval.
+## Qualitative results
 
 ### Aachen
 <p align="center">
@@ -25,6 +24,12 @@ Fully-supervised CNN-based approaches for learning local image descriptors have 
   <img src="doc/inloc2.png" width="49%" />
 </p>
 
+## Requirements
+```
+conda create -n hndesc_env python=3.9
+conda activate hndesc_env
+pip install -r requirements.txt
+```
 
 
 
