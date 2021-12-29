@@ -1,0 +1,29 @@
+task_params:
+  name: localization
+  dataset: aachen_v11
+  detector:
+    name: superpoint_orig
+    resize_max: 1024
+    nms_radius: 3
+    keypoint_threshold: 0.005
+    max_keypoints: 4096
+    remove_borders: 4
+    snapshot: ${paths.snapshots_dir}/${task.task_params.detector.name}/checkpoint.pt
+  paths:
+    colmap_dir: /usr/local/bin
+    scene_home_dir: ${paths.datasets_home_dir}/visual_localization/${task.task_params.dataset}
+    img_path: ${task.task_params.paths.scene_home_dir}/images_upright
+    img_home_dir: ${task.task_params.paths.img_path}
+  colmap_data:
+    db_fname: ${task.task_params.paths.scene_home_dir}/TEST_AACHEN_V11_ALL.db
+    intrinsics: ${task.task_params.paths.scene_home_dir}/3D-models/database_intrinsics_v1_1.txt
+    nvm_database: ${task.task_params.paths.scene_home_dir}/3D-models/aachen_v_1_1.nvm
+    image_pairs_fname: ${task.task_params.paths.scene_home_dir}/image_pairs_day_night_aachen_v11_top20.txt
+    queries_to_localize: ${task.task_params.paths.scene_home_dir}/queries/queries_with_intrinsics_v11.txt
+  output:
+    home_dir: ${paths.output_home_dir}/extracted_kpts_descs/localization/${task.task_params.dataset}
+    det_desc_home_dir: ${task.task_params.output.home_dir}/${task.task_params.detector.name}-n${task.task_params.detector.max_keypoints}-r${task.task_params.detector.resize_max}__${descriptor.descriptor_params.name}_${descriptor.descriptor_params.backbone}_${descriptor.descriptor_params.exper_settings_name}
+    loc_res_dir: ${task.task_params.output.det_desc_home_dir}/loc
+    precomputed_feats_dir: ${task.task_params.output.det_desc_home_dir}/feats
+    res_txt_fname: ${task.task_params.output.det_desc_home_dir}/pred_poses.txt
+    res_colmap_db: ${task.task_params.output.loc_res_dir}/database.db

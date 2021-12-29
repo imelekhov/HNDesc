@@ -1,5 +1,4 @@
 import numpy as np
-import collections
 import os
 from os import path as osp
 import sqlite3
@@ -448,7 +447,9 @@ class AachenLocalizer(ColmapLoclalizerBase):
         img_fnames = self._create_list_of_imgs()
 
         # Let us extract image features
+        print(f"Extracting features... ")
         self.ldd_model.evaluate(img_fnames)
+        print(f"Extracting features... Done.")
 
         # Reconstruction pipeline
         _ = self._preprocess_reference_model()
