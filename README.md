@@ -22,6 +22,7 @@ The pretrained models are available [here](https://drive.google.com/file/d/1bHJz
 Please download the preprocessed original MegaDepth dataset, its stylized copy, and precomputed SuperPoint keypoints and unzip to `$HNDESC_TRAIN_DATA`. The data (~24 Gb) is available on [GDrive](https://drive.google.com/file/d/18Wv0XIIMEsYeUNvbLX4GExncRyilj_WG/view?usp=sharing). Once the data is downloaded, please do the following:
 - Modify the `HNDesc/configs/main.yaml` config file by changing the key `data_params.dataset_dir` to `$HNDESC_TRAIN_DATA`
 - Start training by running `python train.py`
+
 One can specify the backbone network `[caps, r2d2]` as well as the batch size, learning rate, and the number of training iterations by changing specific keys of the config file.
 
 
@@ -77,10 +78,19 @@ Once finished, the extracted features as well as a txt file with the results are
 
 
 ### Image retrieval
+Download the rOxford5k, rParis6k datasets, and the list of precomputed nearest neighbors using the following [GDrive link (~4.5Gb)](asf). Copy the downloaded archive to `$EVAL_DATASETS_PATH` and extract it there. Modify the `experiments/configs/main.yaml` config file in the following way:
+- `defaults.task` to `image_retrieval_radenovic`
+- `paths.datasets_home_dir` to `$EVAL_DATASETS_PATH`
+- Run `python main.py` under `experiments/`
 
 ### Camera relocalization
-
-
+- Install [COLMAP](https://colmap.github.io/) to $COLMAP_DIR
+- Modify the `paths.colmap_dir` key in `experiments/configs/task/localization_aachen_v11.yaml` to `$COLMAP_DIR`
+- Download the preprocessed data using the following [GDrive link (~6.5Gb)](asf) and copy to `$EVAL_DATASETS_PATH`
+- Modify the `paths.datasets_home_dir` key in `experiments/configs/main.yaml` to `$EVAL_DATASETS_PATH`
+- Modify the `defaults.task` key in `experiments/configs/main.yaml` to `localization_aachen_v11`
+- Run `python main.py` under `experiments/`
+The resulted file with predicted query poses is placed at `output_hndesc/extracted_kpts_descs/visual_localization/pred.txt` and one can upload it to `https://www.visuallocalization.net/` to get localization performance.
 
 
 ## Cite
