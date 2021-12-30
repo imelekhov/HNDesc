@@ -26,12 +26,33 @@ Once the model weights obtained, there are two ways of evaluation on HPatches:
 
 One can run the `eval_on_hpatches.sh` script that automatically downloads the HPatches dataset and performs evaluation. Before evaluation, it is required to specify `$DATASETS_PATH` where the dataset is going to be downloaded.
 
-Manually change the config files:
+Or manually change the config files:
   - Open `experiments/configs/main.yaml` and change the following keys:
     - `defaults.task` to `hpatches`
     - `defaults.descriptor` to `hndesc`
     - `paths.datasets_home_dir` to `$DATASETS_PATH`
   - Run `python main.py` under `experiments/`
+
+Once finished, the extracted features as well as a txt file with the results are saved at `HNDesc/output/extracted_kpts_descs/hpatches/superpoint_orig-n-1-rNone__hndesc_caps_hndesc_caps_MP_st/`. For the model specified in `eval_on_hpatches.sh` the output txt file is the following:
+
+  ```
+  PCK benchmark:
+  MMA@1 v/i/avg: 0.250 / 0.426 / 0.338
+  MMA@2 v/i/avg: 0.505 / 0.602 / 0.554
+  MMA@3 v/i/avg: 0.630 / 0.716 / 0.673
+  MMA@4 v/i/avg: 0.695 / 0.778 / 0.737
+  MMA@5 v/i/avg: 0.732 / 0.822 / 0.777
+  MMA@6 v/i/avg: 0.757 / 0.845 / 0.801
+  MMA@7 v/i/avg: 0.774 / 0.862 / 0.818
+  MMA@8 v/i/avg: 0.787 / 0.879 / 0.833
+  MMA@9 v/i/avg: 0.797 / 0.894 / 0.846
+  MMA@10 v/i/avg: 0.806 / 0.906 / 0.856
+  Homography benchmark:
+  th: 1 v/i/avg: 0.207 / 0.492 / 0.344
+  th: 3 v/i/avg: 0.557 / 0.858 / 0.702
+  th: 5 v/i/avg: 0.700 / 0.973 / 0.831
+  th: 10 v/i/avg: 0.846 / 0.996 / 0.919
+  ```
 
 
 ### Image retrieval
