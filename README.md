@@ -1,5 +1,5 @@
 # Digging Into Self-Supervised Learning of Feature Descriptors
-This repository contains the PyTorch implementation of our work **Digging Into Self-Supervised Learning of Feature Descriptors** presented at 3DV 2021 
+This repository contains the PyTorch implementation of our work **Digging Into Self-Supervised Learning of Feature Descriptors** presented at 3DV 2021
 [[Project page]](https://imelekhov.com/hndesc/)
 [[ArXiv]](https://arxiv.org/abs/2110.04773)
 
@@ -16,19 +16,20 @@ conda create -n hndesc_env python=3.9
 conda activate hndesc_env
 pip install -r requirements.txt
 ```
+The pretrained models are available [here](https://drive.google.com/file/d/1bHJzHK6lMW424d72MpB3M6Se_tXAbSq4/view?usp=sharing). In this project, we use the [Hydra](https://hydra.cc/docs/intro/) library to handle JSON-based config files. 
 
 ## Evaluation
-The pretrained models are available [here](https://drive.google.com/file/d/1bHJzHK6lMW424d72MpB3M6Se_tXAbSq4/view?usp=sharing).
-The data (~24 Gb) is available [here](https://drive.google.com/file/d/18Wv0XIIMEsYeUNvbLX4GExncRyilj_WG/view?usp=sharing).
-
-We provide code for evaluation HNDesc on the following benchmarks/tasks:
+We provide code for evaluation HNDesc on the following benchmarks/tasks: image matching (HPatches), image retrieval (rOxford5k, rParis6k, and Tokyo24/7), and camera relocalization (Aachen v1.1). The code is available under `experiments\`.
 
 ### HPatches
+
 
 ### Image retrieval
 
 ### Camera relocalization
 
+## Training
+The data (~24 Gb) is available [here](https://drive.google.com/file/d/18Wv0XIIMEsYeUNvbLX4GExncRyilj_WG/view?usp=sharing).
 
 
 ## Qualitative results
