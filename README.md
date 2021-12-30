@@ -18,6 +18,27 @@ pip install -r requirements.txt
 ```
 The pretrained models are available [here](https://drive.google.com/file/d/1bHJzHK6lMW424d72MpB3M6Se_tXAbSq4/view?usp=sharing). In this project, we use the [Hydra](https://hydra.cc/docs/intro/) library to handle JSON-based config files.
 
+## Training
+Please download the preprocessed original MegaDepth dataset, its stylized copy, and precomputed SuperPoint keypoints and unzip to `$HNDESC_TRAIN_DATA`. The data (~24 Gb) is available on [GDrive](https://drive.google.com/file/d/18Wv0XIIMEsYeUNvbLX4GExncRyilj_WG/view?usp=sharing). Once the data is downloaded, please do the following:
+- Modify the `HNDesc/configs/main.yaml` config file by changing the key `data_params.dataset_dir` to `$HNDESC_TRAIN_DATA`
+- Start training by running `python train.py`
+One can specify the backbone network `[caps, r2d2]` as well as the batch size, learning rate, and the number of training iterations by changing specific keys of the config file.
+
+
+## Qualitative results
+
+### Aachen
+<p align="center">
+  <img src="doc/aachen1.png" width="49%" />
+  <img src="doc/aachen2.png" width="49%" />
+</p>
+
+### InLOC
+<p align="center">
+  <img src="doc/inloc1.png" width="49%" />
+  <img src="doc/inloc2.png" width="49%" />
+</p>
+
 ## Evaluation
 We provide code for evaluation HNDesc on the following benchmarks/tasks: image matching (HPatches), image retrieval (rOxford5k, rParis6k, and Tokyo24/7), and camera relocalization (Aachen v1.1). The code is available under `experiments/`. Download the model [weights](https://drive.google.com/file/d/1bHJzHK6lMW424d72MpB3M6Se_tXAbSq4/view?usp=sharing) and extract them to `assets/`.
 
@@ -33,7 +54,7 @@ Or manually change the config files:
     - `paths.datasets_home_dir` to `$DATASETS_PATH`
   - Run `python main.py` under `experiments/`
 
-Once finished, the extracted features as well as a txt file with the results are saved at `HNDesc/output/extracted_kpts_descs/hpatches/superpoint_orig-n-1-rNone__hndesc_caps_hndesc_caps_MP_st/`. For the model specified in `eval_on_hpatches.sh` the output txt file is the following:
+Once finished, the extracted features as well as a txt file with the results are saved at `HNDesc/output_hndesc/extracted_kpts_descs/hpatches/superpoint_orig-n-1-rNone__hndesc_caps_hndesc_caps_MP_st/`. For the model specified in `eval_on_hpatches.sh` the output txt file is the following:
 
   ```
   PCK benchmark:
@@ -59,23 +80,7 @@ Once finished, the extracted features as well as a txt file with the results are
 
 ### Camera relocalization
 
-## Training
-The data (~24 Gb) is available [here](https://drive.google.com/file/d/18Wv0XIIMEsYeUNvbLX4GExncRyilj_WG/view?usp=sharing).
 
-
-## Qualitative results
-
-### Aachen
-<p align="center">
-  <img src="doc/aachen1.png" width="49%" />
-  <img src="doc/aachen2.png" width="49%" />
-</p>
-
-### InLOC
-<p align="center">
-  <img src="doc/inloc1.png" width="49%" />
-  <img src="doc/inloc2.png" width="49%" />
-</p>
 
 
 ## Cite
