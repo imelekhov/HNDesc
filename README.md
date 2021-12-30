@@ -16,12 +16,20 @@ conda create -n hndesc_env python=3.9
 conda activate hndesc_env
 pip install -r requirements.txt
 ```
-The pretrained models are available [here](https://drive.google.com/file/d/1bHJzHK6lMW424d72MpB3M6Se_tXAbSq4/view?usp=sharing). In this project, we use the [Hydra](https://hydra.cc/docs/intro/) library to handle JSON-based config files. 
+The pretrained models are available [here](https://drive.google.com/file/d/1bHJzHK6lMW424d72MpB3M6Se_tXAbSq4/view?usp=sharing). In this project, we use the [Hydra](https://hydra.cc/docs/intro/) library to handle JSON-based config files.
 
 ## Evaluation
-We provide code for evaluation HNDesc on the following benchmarks/tasks: image matching (HPatches), image retrieval (rOxford5k, rParis6k, and Tokyo24/7), and camera relocalization (Aachen v1.1). The code is available under `experiments\`.
+We provide code for evaluation HNDesc on the following benchmarks/tasks: image matching (HPatches), image retrieval (rOxford5k, rParis6k, and Tokyo24/7), and camera relocalization (Aachen v1.1). The code is available under `experiments/`. Download the model [weights](https://drive.google.com/file/d/1bHJzHK6lMW424d72MpB3M6Se_tXAbSq4/view?usp=sharing) and extract them to `assets/`.
 
 ### HPatches
+Once the model weights obtained, there are two ways of evaluation on HPatches:
+1. One can run the `eval_on_hpatches.sh` script that automatically downloads the HPatches dataset and performs evaluation. Before evaluation, it is required to specify `$DATASETS_PATH` where the dataset is going to be downloaded.
+2. Manually change the config files:
+  - Open `experiments/configs/main.yaml` and change the following keys:
+    - `defaults.task` to `hpatches`
+    - `defaults.descriptor` to `hndesc`
+    - `paths.datasets_home_dir` to `$DATASETS_PATH`
+  - Run `python main.py` under `experiments/`
 
 
 ### Image retrieval
@@ -45,14 +53,6 @@ The data (~24 Gb) is available [here](https://drive.google.com/file/d/18Wv0XIIME
   <img src="doc/inloc1.png" width="49%" />
   <img src="doc/inloc2.png" width="49%" />
 </p>
-
-## Requirements
-```
-conda create -n hndesc_env python=3.9
-conda activate hndesc_env
-pip install -r requirements.txt
-```
-
 
 
 ## Cite
