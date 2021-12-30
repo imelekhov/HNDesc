@@ -23,8 +23,10 @@ We provide code for evaluation HNDesc on the following benchmarks/tasks: image m
 
 ### HPatches
 Once the model weights obtained, there are two ways of evaluation on HPatches:
-1. One can run the `eval_on_hpatches.sh` script that automatically downloads the HPatches dataset and performs evaluation. Before evaluation, it is required to specify `$DATASETS_PATH` where the dataset is going to be downloaded.
-2. Manually change the config files:
+
+One can run the `eval_on_hpatches.sh` script that automatically downloads the HPatches dataset and performs evaluation. Before evaluation, it is required to specify `$DATASETS_PATH` where the dataset is going to be downloaded.
+
+Manually change the config files:
   - Open `experiments/configs/main.yaml` and change the following keys:
     - `defaults.task` to `hpatches`
     - `defaults.descriptor` to `hndesc`
