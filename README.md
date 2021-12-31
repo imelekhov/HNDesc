@@ -3,6 +3,9 @@ This repository contains the PyTorch implementation of our work **Digging Into S
 [[Project page]](https://imelekhov.com/hndesc/)
 [[ArXiv]](https://arxiv.org/abs/2110.04773)
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+
 TL;DR: The paper proposes an Unsupervised CNN-based local descriptor that is robust to illumination changes and competitve with its fully-(weakly-)supervised counterparts.
 
 <p align="center">
