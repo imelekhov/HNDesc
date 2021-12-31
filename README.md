@@ -78,7 +78,7 @@ Once finished, the extracted features as well as a txt file with the results are
 
 
 ### Image retrieval
-Download the rOxford5k, rParis6k datasets, and the list of precomputed nearest neighbors using the following [GDrive link (~4.5Gb)](asf). Copy the downloaded archive to `$EVAL_DATASETS_PATH` and extract it there. Modify the `experiments/configs/main.yaml` config file in the following way:
+Download the rOxford5k, rParis6k datasets, and the list of precomputed nearest neighbors using the following [GDrive link (~4.5Gb)](https://drive.google.com/file/d/1dRk7ifDls2QLxZ9weZQkZ_b0mFl1AGnr/view?usp=sharing). Copy the downloaded archive to `$EVAL_DATASETS_PATH` and extract it there. Modify the `experiments/configs/main.yaml` config file in the following way:
 - `defaults.task` to `image_retrieval_radenovic`
 - `paths.datasets_home_dir` to `$EVAL_DATASETS_PATH`
 - Run `python main.py` under `experiments/`
@@ -86,7 +86,7 @@ Download the rOxford5k, rParis6k datasets, and the list of precomputed nearest n
 ### Camera relocalization
 - Install [COLMAP](https://colmap.github.io/) to $COLMAP_DIR
 - Modify the `paths.colmap_dir` key in `experiments/configs/task/localization_aachen_v11.yaml` to `$COLMAP_DIR`
-- Download the preprocessed data using the following [GDrive link (~6.5Gb)](asf) and copy to `$EVAL_DATASETS_PATH`
+- Download the preprocessed data using the following [GDrive link (~6.5Gb)](https://drive.google.com/file/d/1BYip8o_e3tO6FKNjmsyUMSSjrTd-mEJV/view?usp=sharing) and copy to `$EVAL_DATASETS_PATH`
 - Modify the `paths.datasets_home_dir` key in `experiments/configs/main.yaml` to `$EVAL_DATASETS_PATH`
 - Modify the `defaults.task` key in `experiments/configs/main.yaml` to `localization_aachen_v11`
 - Run `python main.py` under `experiments/`
