@@ -99,7 +99,7 @@ The resulted file with predicted query poses is placed at `output_hndesc/extract
 ## Cite
 If you find our work useful, please cite *both* papers:
 ```bibtex
-  @inproceedings{Melekhov2021hardnet,
+  @inproceedings{Melekhov2021hndesc,
     title = {Digging Into Self-Supervised Learning of Feature Descriptors},
     author = {Melekhov, Iaroslav and Laskar, Zakaria and Li, Xiaotian and Wang, Shuzhe and Kannala Juho},
     booktitle = {In Proceedings of the International Conference on 3D Vision (3DV)},
